@@ -1,4 +1,4 @@
-# CO2 Emissions of U.S. Companies
+# Greenhouse Gas Emissions of U.S. Companies
 
 ## Reasoning
 
@@ -16,9 +16,9 @@ https://www.epa.gov/ghgreporting
 ## Questions
 
 Our team aims to answer the following questions:
-- What trends are associated with CO2 emissions of U.S. companies from 2010 to 2020?
-- What can we predict about CO2 emissions in the future? 
-- How will current CO2 patterns affect future emissions?
+- What trends are associated with GHG emissions of U.S. companies from 2010 to 2020?
+- What can we predict about GHG emissions in the future? 
+- How will current GHG patterns affect future emissions?
 
 ## Communication Protocols
 
