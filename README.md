@@ -1,1 +1,1 @@
-# CO2_emissions
+# GHG_emissions
