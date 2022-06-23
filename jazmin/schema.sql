@@ -109,3 +109,11 @@ SELECT COUNT(facility_id)
 FROM gather_boost;
 
 DROP TABLE gather_boost;
+
+-- Create industry_type table and check it out
+SELECT & FROM industry_type;
+
+SELECT COUNT(industry_type_subpart)
+FROM industry_type;
+
+DROP TABLE industry_type;
