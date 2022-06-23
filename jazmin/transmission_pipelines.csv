@@ -1,4 +1,4 @@
-facility_id,facility_name,state,primary_naics_code,industry_type_subpart,2020 Total reported direct emissions from Transmission Pipelines,2019 Total reported direct emissions from Transmission Pipelines,2018 Total reported direct emissions from Transmission Pipelines,2017 Total reported direct emissions from Transmission Pipelines,2016 Total reported direct emissions from Transmission Pipelines
+facility_id,facility_name,state,primary_naics_code,industry_type_subpart,total_emissions_2020,total_emissions_2019,total_emissions_2018,total_emissions_2017,total_emissions_2016
 1012420,Algonquin Gas Transmission L.L.C.,Connecticut,486210,W-TRANS,1036.7,7735.4,717.3,10773.15,1264.25
 1012420,Algonquin Gas Transmission L.L.C.,Massachusetts,486210,W-TRANS,337.4,3347.65,23.0,264.55,7515.45
 1012420,Algonquin Gas Transmission L.L.C.,New York,486210,W-TRANS,39.5,4692.15,7092.2,1551.05,24960.05
