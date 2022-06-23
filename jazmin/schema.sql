@@ -57,3 +57,25 @@ SELECT COUNT(facility_id)
 FROM direct_emissions;
 
 DROP TABLE direct_emissions;
+
+-- Create transmission_pipelines table and check it out
+CREATE TABLE transmission_pipelines (
+facility_id INT,
+facility_name VARCHAR,
+state VARCHAR,
+primary_naics_code INT,
+industry_type_subpart VARCHAR,
+total_emissions_2020 NUMERIC,
+total_emissions_2019 NUMERIC,
+total_emissions_2018 NUMERIC,
+total_emissions_2017 NUMERIC,
+total_emissions_2016 NUMERIC
+);
+-- no primary key set, no unique values
+
+SELECT * FROM transmission_pipelines;
+
+SELECT COUNT(facility_id) 
+FROM transmission_pipelines;
+
+DROP TABLE transmission_pipelines;
