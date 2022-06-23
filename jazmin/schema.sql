@@ -111,9 +111,93 @@ FROM gather_boost;
 DROP TABLE gather_boost;
 
 -- Create industry_type table and check it out
+CREATE TABLE industry_type (
+industry_type_subpart VARCHAR,
+industry_name VARCHAR,
+facility_type VARCHAR
+);
+
 SELECT & FROM industry_type;
 
 SELECT COUNT(industry_type_subpart)
 FROM industry_type;
 
 DROP TABLE industry_type;
+
+-- ERD ADDING RELATIONSHIPS
+direct_emitters
+-
+facility_id int PK
+facility_name varchar
+city varchar
+state varchar
+zip_code int
+primary_naics_code int
+industry_type_subpart varchar
+industry_type_sector varchar
+total_emissions_2020 num
+total_emissions_2019 num
+total_emissions_2018 num
+total_emissions_2017 num
+total_emissions_2016 num
+total_emissions_2015 num
+total_emissions_2014 num
+total_emissions_2013 num
+total_emissions_2012 num
+total_emissions_2011 num
+
+onshore_oil_gas
+-
+facility_id PK
+facility_name varchar
+basin varchar
+city varchar
+state varchar
+zip_code int
+primary_naics_code varchar
+industry_type_subpart varchar
+total_emissions_2020 num
+total_emissions_2019 num
+total_emissions_2018 num
+total_emissions_2017 num
+total_emissions_2016 num
+total_emissions_2015 num
+total_emissions_2014 num
+total_emissions_2013 num
+total_emissions_2012 num
+total_emissions_2011 num
+
+gathering_boosting
+-
+facility_id PK
+facility_name varchar
+basin varchar
+city varchar
+state varchar
+zip_code int
+primary_naics_code varchar
+industry_type_subpart varchar
+total_emissions_2020 num
+total_emissions_2019 num
+total_emissions_2018 num
+total_emissions_2017 num
+total_emissions_2016 num
+
+transmission_pipelines
+-
+facility_id int
+facility_name varchar
+state varchar
+primary_naics_code varchar
+industry_type_subpart varchar
+total_emissions_2020 num
+total_emissions_2019 num
+total_emissions_2018 num
+total_emissions_2017 num
+total_emissions_2016 num
+
+industry_type
+-
+industry_type_subpart varchar
+industry_name varchar
+facility_type varchar
