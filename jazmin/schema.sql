@@ -95,11 +95,6 @@ total_emissions_2019 NUMERIC,
 total_emissions_2018 NUMERIC,
 total_emissions_2017 NUMERIC,
 total_emissions_2016 NUMERIC,
-total_emissions_2015 NUMERIC,
-total_emissions_2014 NUMERIC,
-total_emissions_2013 NUMERIC,
-total_emissions_2012 NUMERIC,
-total_emissions_2011 NUMERIC,
 	PRIMARY KEY (facility_id)
 );
 
@@ -201,3 +196,8 @@ industry_type
 industry_type_subpart varchar
 industry_name varchar
 facility_type varchar
+
+
+
+-- add another table for lat/lng
+-- facility_id, lat, lng, basin (split add column)
