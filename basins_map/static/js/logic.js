@@ -23,7 +23,8 @@ streets.addTo(map);
 
 
 // Accessing the basin GeoJSON data
-let basinData = "https://raw.githubusercontent.com/jazminyuen/GHG_emissions/vanessa/basins_map/static/basins.json";
+// let basinData = "https://raw.githubusercontent.com/jazminyuen/GHG_emissions/vanessa/basins_map/static/basins.json";
+let basinData = "./static/basins.json";
 
 
 
@@ -32,7 +33,7 @@ d3.json(basinData).then(function (x) {
   console.log(x);
   // Creating a GeoJSON layer with the retrieved data.
   L.geoJSON(x).addTo(map);
-  
+
 });
 
 
