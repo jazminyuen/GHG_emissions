@@ -138,6 +138,24 @@ SELECT * FROM sector_emissions;
 
 DROP TABLE sector_emissions;
 
+-- Create summary table and check it out
+CREATE TABLE summary (
+year INT,
+count NUMERIC,
+mean NUMERIC,
+std NUMERIC,
+min NUMERIC,
+first_q NUMERIC,
+median NUMERIC,
+third_q NUMERIC,
+max NUMERIC,
+sum NUMERIC
+);
+
+SELECT * FROM summary;
+
+DROP TABLE summary;
+
 -- ERD ADDING RELATIONSHIPS
 direct_emitters
 -
