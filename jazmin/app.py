@@ -12,9 +12,12 @@ app = Dash(__name__)
 
 # Setup layout
 app.layout = html.Div([
-    html.H4('Average emissions by year'),
+    html.H4('Emissions by Top Sectors'),
     dcc.Graph(id="graph"),
-    dcc.Dropdown(id="dropdown", options=["2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"]),
+    dcc.Dropdown(id="dropdown", options=['Power Plants', 'Waste', 'Other', 'Petroleum and Natural Gas Systems',
+       'Minerals', 'Chemicals', 'Metals', 'Pulp and Paper', 'Other,Waste','Pulp and Paper,Waste',
+       'Natural Gas and Natural Gas Liquids Suppliers,Petroleum and Natural Gas Systems',
+       'Petroleum Product Suppliers,Refineries']),
 ])
 
 # Connect to database
@@ -32,7 +35,8 @@ em_df = pd.DataFrame(df[["total_emissions_2011",
                                 "total_emissions_2017",
                                 "total_emissions_2018",
                                 "total_emissions_2019",
-                                "total_emissions_2020"]])
+                                "total_emissions_2020",
+                                "industry_type_sector"]])
 # Rename columns
 em_df = em_df.rename(columns={"total_emissions_2011":"2011",
                                 "total_emissions_2012":"2012",
@@ -43,22 +47,23 @@ em_df = em_df.rename(columns={"total_emissions_2011":"2011",
                                 "total_emissions_2017":"2017",
                                 "total_emissions_2018":"2018",
                                 "total_emissions_2019":"2019",
-                                "total_emissions_2020":"2020"})
-# Create summary df
-summary = em_df.describe()
-summary_df = pd.DataFrame(summary)
-summary_df = summary_df.transpose()
-summary_df["sum"] = em_df.sum().to_list()
+                                "total_emissions_2020":"2020",
+                                 "industry_type_sector":"Sector"})
+
 
 
 # Create callback
 @app.callback(
     Output("graph", "figure"), 
     Input("dropdown", "value"))
-def update_line_chart(continents):
-    df = summary_df # replace with your own data source
-    #mask = df.continent.isin(continents)
-    fig = px.line(df,y="mean")
+def update_line_chart(sector):
+    df = em_df.loc[em_df["Sector"]==sector]
+    df.drop(["Sector"], axis=1, inplace=True)
+    sum = df.sum(axis=0).tolist()
+    year = ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019',
+       '2020'] 
+    #mask = df.year.isin(year)
+    fig = px.bar(x=year,y=sum,title=f'Emissions by Sector: {sector}',labels={'y':'Emissions', 'x':'Year'})
     return fig
 
 
