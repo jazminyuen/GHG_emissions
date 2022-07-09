@@ -112,12 +112,31 @@ industry_name VARCHAR,
 facility_type VARCHAR
 );
 
-SELECT & FROM industry_type;
+SELECT * FROM industry_type;
 
 SELECT COUNT(industry_type_subpart)
 FROM industry_type;
 
 DROP TABLE industry_type;
+
+-- Create sector_emissions table and check it out
+CREATE TABLE sector_emissions (
+_2011 NUMERIC,
+_2012 NUMERIC,
+_2013 NUMERIC,
+_2014 NUMERIC,
+_2015 NUMERIC,
+_2016 NUMERIC,
+_2017 NUMERIC,
+_2018 NUMERIC,
+_2019 NUMERIC,
+_2020 NUMERIC,
+sector VARCHAR
+);
+
+SELECT * FROM sector_emissions;
+
+DROP TABLE sector_emissions;
 
 -- ERD ADDING RELATIONSHIPS
 direct_emitters
