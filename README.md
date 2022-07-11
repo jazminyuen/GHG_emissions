@@ -1,5 +1,8 @@
 # Greenhouse Gas Emissions of U.S. Companies
 
+## Link to our Dashboard
+
+
 ## Reasoning
 
 Our team's chief reason for choosing this topic is our shared concern for humanity and climate change.
@@ -9,19 +12,21 @@ While Jazmin notes extreme weather in her hometowns of Dallas and Chicago, Vanes
 
 ## Data Source
 
-Our team will be using datasets from the U.S. Environmental Protection Agency's Greenhouse Gas Reporting Program (GHGRP) which cover each year from 2010 to 2020. The GHGRP requires the reporting of facilities that are considered direct, large-emitting sources of greenhouse gases, or those emitting 25,000 metric tons or more of carbon dioxide equivalent per year. The program estimates that this covers 85 to 90 percent of total U.S. greenhouse gas emissions from more than 8,000 facilities.
+Our team will be using datasets from the U.S. Environmental Protection Agency's Greenhouse Gas Reporting Program (GHGRP) which cover each year from 2011 to 2020. The GHGRP requires the reporting of facilities that are considered direct, large-emitting sources of greenhouse gases, or those emitting 25,000 metric tons or more of carbon dioxide equivalent per year. The program estimates that this covers 85 to 90 percent of total U.S. greenhouse gas emissions from more than 8,000 facilities.
 
 https://www.epa.gov/ghgreporting
 
 ## Questions
 
-Our team aims to answer the following questions:
-- What trends are associated with GHG emissions of U.S. companies from 2010 to 2020?
-- What can we predict about GHG emissions in the future? 
-- How will current GHG patterns affect future emissions?
+Our team aims to answer the following question:
+- What trends are there to be discovered with GHG emissions of U.S. companies from 2011 to 2020?
 
 ## Communication Protocols
 
 - Scheduled Zoom check-in meetings
 - Shared Google Doc to track ideas
 - Slack for messaging
+
+## Presentation Notes in Google Slides
+This link will bring you to our slide show that holds our speaker notes. 
+https://docs.google.com/presentation/d/1d_GdN0rWRnPdJn9xq8NHONRx1OgGFIx-fp7_ixD87c4/edit?usp=sharing
