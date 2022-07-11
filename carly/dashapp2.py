@@ -2,6 +2,7 @@
 #import dependencies
 
 from itertools import dropwhile
+from tkinter.tix import CheckList
 import dash
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
@@ -16,7 +17,7 @@ import plotly.express as px
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 from sqlalchemy import text
-
+from dash import Dash, dcc, html, Input, Output
 
 
 
@@ -51,32 +52,14 @@ emissions_df = pd.DataFrame(table)
 
 #jazmin summary data
 
-em_df = pd.DataFrame(df[["total_emissions_2011",
-                                "total_emissions_2012",
-                                "total_emissions_2013",
-                                "total_emissions_2014",
-                                "total_emissions_2015",
-                                "total_emissions_2016",
-                                "total_emissions_2017",
-                                "total_emissions_2018",
-                                "total_emissions_2019",
-                                "total_emissions_2020"]])
+query2 = text('SELECT * FROM sector_emissions')
+df1 = pd.read_sql(query2,engine)
 # Rename columns
-em_df = em_df.rename(columns={"total_emissions_2011":"2011",
-                                "total_emissions_2012":"2012",
-                                "total_emissions_2013":"2013",
-                                "total_emissions_2014":"2014",
-                                "total_emissions_2015":"2015",
-                                "total_emissions_2016":"2016",
-                                "total_emissions_2017":"2017",
-                                "total_emissions_2018":"2018",
-                                "total_emissions_2019":"2019",
-                                "total_emissions_2020":"2020"})
-# Create summary df
-summary = em_df.describe()
-summary_df = pd.DataFrame(summary)
-summary_df = summary_df.transpose()
-summary_df["sum"] = em_df.sum().to_list()
+em_df = df1.rename(columns={"_2011":"2011","_2012":"2012","_2013":"2013","_2014":"2014","_2015":"2015","_2016":"2016","_2017":"2017","_2018":"2018","_2019":"2019","_2020":"2020","sector":"Sector"})
+# Get summary table
+query_summary = text('SELECT * FROM summary')
+summary_df = pd.read_sql(query_summary, engine)
+print(summary_df)
 
 
 
@@ -161,7 +144,7 @@ with urlopen('https://raw.githubusercontent.com/jazminyuen/GHG_emissions/vanessa
 
 # app design
 
-# the style arguments for the sidebar.
+# # the style arguments for the sidebar.
 SIDEBAR_STYLE = {
     'position': 'fixed',
     'top': 0,
@@ -191,137 +174,43 @@ CARD_TEXT_STYLE = {
 
 controls = dbc.FormGroup(
     [
-        html.P('Select Year', style={
+        html.P('Dropdown', style={
             'textAlign': 'center'
         }),
         dcc.Dropdown(
             id='dropdown',
-            options=[{
-                'label': '2011',
-                'value': 'total_emissions_2011'
-            }, {
-                'label': '2012',
-                'value': 'total_emissions_2012'
-            },
-                {
-                    'label': '2013',
-                    'value': 'total_emissions_2013'
-                },
-                {
-                    'label': '2014',
-                    'value': 'total_emissions_2014'
-                },
-                {
-                    'label': '2015',
-                    'value':'total_emissions_2015'
-                },
-                {
-                    'label':'2016',
-                    'value':'total_emissions_2016'
-                },
-                {
-                    'label':'2017',
-                    'value':'total_emissions_2017'
-                },
-                {
-                    'label':'2018',
-                    'value':"total_emissions_2018"
-                },
-                {
-                    'label':'2019',
-                    'value':'total_emissions_2019'
-                },
-                {
-                    "label":'2020',
-                    'value':'total_emissions_2020'
-                }
-            ],
-            value=['value1'],  # default value
+            options=['Power Plants', 'Waste', 'Other', 'Petroleum and Natural Gas Systems',
+       'Minerals', 'Chemicals', 'Metals', 'Pulp and Paper', 'Other,Waste','Pulp and Paper,Waste',
+       'Natural Gas and Natural Gas Liquids Suppliers,Petroleum and Natural Gas Systems',
+       'Petroleum Product Suppliers,Refineries'],
+            value=['Power Plants'],  # default value
             multi=True
         ),
-        # html.Br(),
-        # html.P('Range Slider', style={
-        #     'textAlign': 'center'
-        # }),
-        # dcc.RangeSlider(
-        #     id='range_slider',
-        #     min=0,
-        #     max=20,
-        #     step=0.5,
-        #     value=[5, 15]
-        # ),
-        html.P('Select Sectors', style={
+
+        html.P('Check list', style={
             'textAlign': 'center'
         }),
         dbc.Card([dbc.Checklist(
             id='check_list',
-            options=[{
-                'label': 'Power Plants',
-                'value': '(df.loc[df[industry_type_sector] == Power Plants].values)'
+                        options=[{
+                'label': 'mean',
+                'value': summary_df['mean']
+            },
+                {
+                    'label': 'median',
+                    'value': summary_df['median']
                 },
                 {
-                    'label': 'Waste',
-                    'value': 'df.loc[df[industry_type_sector] == Power Plants]'
-                },
-                {
-                    'label': 'Petroleum and Natural Gas Systems',
-                    'value': 'df.loc[df[industry_type_sector] == Power Plants]'
-                },
-                {
-                    'label': 'Minerals',
-                    'value': 'df.loc[df[industry_type_sector] == Minerals]'
-                },
-                {
-                    'label': 'Chemicals',
-                    'value': 'df.loc[df[industry_type_sector] == Chemicals]'   
-                },
-                {
-                    'label': 'Metals',
-                    'value': 'df.loc[df[industry_type_sector] == Metals]'   
-                },
-                {
-                    'label': 'Pulp and Paper',
-                    'value': 'df.loc[df[industry_type_sector] == Pulp and Paper]'   
+                    'label': 'sum',
+                    'value': summary_df['median']
                 }
-
             ],
-            value=['value1'],
+            value=[summary_df['mean']],
             inline=True
         )]),
-        # html.Br(),
-        # html.P('Radio Items', style={
-        #     'textAlign': 'center'
-        # }),
-        # dbc.Card([dbc.RadioItems(
-        #     id='radio_items',
-        #     options=[{
-        #         'label': 'Value One',
-        #         'value': 'value1'
-        #     },
-        #         {
-        #             'label': 'Value Two',
-        #             'value': 'value2'
-        #         },
-        #         {
-        #             'label': 'Value Three',
-        #             'value': 'value3'
-        #         }
-        #     ],
-        #     value='value1',
-        #     style={
-        #         'margin': 'auto'
-        #     }
-        # )]),
-        html.Br(),
-        dbc.Button(
-            id='submit_button',
-            n_clicks=0,
-            children='Submit',
-            color='primary',
-            block=True
-        ),
     ]
 )
+
 
 sidebar = html.Div(
     [
@@ -391,7 +280,12 @@ content_first_row = dbc.Row([
         md=3
     )
 ])
-fig1 = px.bar(emissions_df, x='Year', y='emissions', title="Total Direct Emissions by Year")
+
+
+
+
+
+defig = px.bar(emissions_df, x='Year', y='emissions', title="Total Direct Emissions by Year", color='emissions')
 mlfig = px.scatter(data_frame=direct_emitters_total, x="total_emissions", y="industry_type_sector", color="class",
            size="total_emissions", color_discrete_sequence=["gold", "darkorange", "red"],
                            labels={
@@ -403,15 +297,12 @@ fig3d = px.scatter_3d(direct_emitters_total, x="total_emissions", y="industry_ty
            color_discrete_sequence=["yellow", "orange", "red"], width=800)
 fig3d.update_layout(legend=dict(x=0,y=1))
 
-mapfig = px.scatter_geo(basins, locations="type")
-
-
 
 content_second_row = dbc.Row(
     [
         dbc.Col(
             
-            dcc.Graph(figure=fig1), md=6,
+            dcc.Graph(figure=defig), md=6,
             
         ),
         dbc.Col(
@@ -421,7 +312,6 @@ content_second_row = dbc.Row(
 
   
 
-secfig = px.bar(direct_emitters_total, x="industry_type_sector", y='total_emissions')
 content_third_row = dbc.Row(
     [
         dbc.Col(
@@ -429,25 +319,79 @@ content_third_row = dbc.Row(
         ),
     ]
 )
+app = Dash(__name__)
+
+sector = ['Power Plants', 'Waste', 'Other', 'Petroleum and Natural Gas Systems',
+       'Minerals', 'Chemicals', 'Metals', 'Pulp and Paper', 'Other,Waste','Pulp and Paper,Waste',
+       'Natural Gas and Natural Gas Liquids Suppliers', 'Petroleum and Natural Gas Systems',
+       'Petroleum Product Suppliers, Refineries']
+secdf = em_df #.loc[em_df["Sector"]== sector]
+secdf.drop(["Sector"], axis=1, inplace=True)
+sum = secdf.sum(axis=0).tolist()
+year = ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'] 
+mean = df.mean(axis=0).tolist()
+sectorfig = px.bar(x=year,y=sum,title=f'Emissions by Sector: {sector}',labels={'y':'Emissions', 'x':'Year'})
+sectorfig.update_traces(marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)',
+                  marker_line_width=1.5, opacity=0.6)
 
 
 
 
 
-content_fourth_row = dbc.Row(
-     [
+# content_fourth_row = dbc.Row(
+#     [
 #         dbc.Col(
-#         html.Div([
-#         html.H4('Average emissions by year'),
-#         dcc.Graph(id="chart"),
-#         dcc.Dropdown(id="dropdown2", options=["2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"]),
-# ])
-        # ),
+#             html.H4('Emissions by Top Sectors'),
+#             dcc.Graph(figure = sectorfig, id="sectorgraph"), md=12,
+#         ),
+#     ]
+# )
+emissionsfig = px.line(summary_df, x="year", y='mean', labels={"year":"Year", "value":'mean'})
+emissionsfig.update_traces(marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)',
+                  marker_line_width=1.5, opacity=0.6)
+
+content_fifth_row = dbc.Row(
+    [
         dbc.Col(
-            dcc.Graph(id='graph_1', figure = secfig), md=4
-        )
+            html.H4('Emissions by Top Sectors'),
+            dcc.Graph(figure = emissionsfig, id="emissionsgraph"), md=12,
+        ),
     ]
-)
+)    
+
+
+# content_fourth_row = dbc.Row(
+#     [
+#         dbc.Col(html.H4('Total Emissions Stats')),
+#         dbc.Col(html.H4(dcc.Checklist(["mean","median","sum"]))),
+#         dbc.Col(html.H4(dcc.Graph(update_summary_chart('value'))))
+        
+#         ["mean"])
+#     ]
+# )
+# content_fourth_row = dbc.Row(
+#     dbc.Col(html.Div(
+#             [
+#             html.H4('Total Emissions Stats'),
+#             dcc.Graph(id="graph6"),
+#             dcc.Checklist(id="checklist6", options=["mean","median","sum"])
+#              ]
+#                         ),
+                    
+#                 )
+#                 md=12
+#             )
+
+
+# @app.callback(
+#     Output("graph6", "figure"), 
+#     Input("checklist6", "value"))
+# def update_summary_chart(value):
+#     df6 = summary_df
+#     fig6 = px.line(df6, x="year", y=value, labels={"year":"Year", "value":f"{value}"})
+#     fig6.update_traces(marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)',
+#                   marker_line_width=1.5, opacity=0.6)
+#     return fig6
 
 content = html.Div(
     [
@@ -456,33 +400,59 @@ content = html.Div(
         content_first_row,
         content_second_row,
         content_third_row,
-        content_fourth_row
+        content_fifth_row,
+
     ],
     style=CONTENT_STYLE
 )
 
+
+
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app.layout = html.Div([content])
+
+
 app.layout = html.Div([sidebar, content])
 
 
 
+
 # @app.callback(
-#     Output("graph", "figure"), 
-#     Input("dropdown", "value"))
-# def update_bar_chart(day):
-#     df = df # replace with your own data source
-#     figselect = px.bar(df, x="industry_type_sector", y="total_emissions_2020", 
-#                  color='rgb(158,202,225)', barmode="group")
+#     Output("chart", "figure"), 
+#     Input("dropdown2", "value"))
+# def update_line_chart(continents):
+#     df = summary_df 
+#     #mask = df.continent.isin(continents)
+#     fig = px.line(df,y="mean")
 #     return fig
 
-@app.callback(
-    Output("chart", "figure"), 
-    Input("dropdown2", "value"))
-def update_line_chart(continents):
-    df = summary_df # replace with your own data source
-    #mask = df.continent.isin(continents)
-    fig = px.line(df,y="mean")
-    return fig
+
+# @app.callback(
+#     Output("chart", "figure"), 
+#     Input("dropdown2", "value"))
+# def update_sector_chart(sector):
+#     df = em_df.loc[em_df["Sector"]==sector]
+#     df.drop(["Sector"], axis=1, inplace=True)
+#     sum = df.sum(axis=0).tolist()
+#     year = ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019',
+#        '2020'] 
+#     # mean = df.mean(axis=0).tolist()
+#     fig = px.bar(x=year,y=sum,title=f'Emissions by Sector: {sector}',labels={'y':'Emissions', 'x':'Year'})
+#     fig.update_traces(marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)',
+#                   marker_line_width=1.5, opacity=0.6)
+#     return fig
+
+# @app.callback(
+#     Output("emissionsgraph", "figure"), 
+#     Input("checklist1", "value"))
+# def update_summary_chart(value):
+#     df = summary_df
+#     fig = px.line(df, x="year", y=value, labels={"year":"Year", "value":f"{value}"})
+#     fig.update_traces(marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)',
+#                   marker_line_width=1.5, opacity=0.6)
+#     return fig
+    
+
 
 
 
@@ -499,37 +469,7 @@ def update_line_chart(continents):
 #     return fig
 
 
-# @app.callback(
-#     Output('graph_2', 'figure')
-#     [Input('submit_button', 'n_clicks')]
-#     # [State('dropdown', 'value'), State('range_slider', 'value'), State('check_list', 'value'),
-#     #  State('radio_items', 'value')
-#      )
-# def update_graph_2(n_clicks, check_list_value):
-#     print(n_clicks)
-#     # print(dropdown_value)
-#     # print(range_slider_value)
-#     # print(check_list_value)
-#     # print(radio_items_value)
-#     fig = px.bar(emissions_df, x='Year', y='emissions')
-#     return fig
 
-
-# @app.callback(
-#     Output('graph_3', 'figure'),
-#     [Input('submit_button', 'n_clicks')],
-#     [State('dropdown', 'value'), State('range_slider', 'value'), State('check_list', 'value'),
-#      State('radio_items', 'value')
-#      ])
-# def update_graph_3(n_clicks, dropdown_value, range_slider_value, check_list_value, radio_items_value):
-#     print(n_clicks)
-#     print(dropdown_value)
-#     print(range_slider_value)
-#     print(check_list_value)
-#     print(radio_items_value)
-#     df = px.data.iris()
-#     fig = px.density_contour(df, x='sepal_width', y='sepal_length')
-#     return fig
 
 
 # @app.callback(
@@ -551,68 +491,6 @@ def update_line_chart(continents):
 #         'height': 600
 #     })
 #     return fig
-
-
-# @app.callback(
-#     Output('graph_5', 'figure'),
-#     [Input('submit_button', 'n_clicks')],
-#     [State('dropdown', 'value'), State('check_list', 'value')] 
-# def update_graph_5(n_clicks, dropdown_value, range_slider_value, check_list_value, radio_items_value):
-#     print(n_clicks)
-#     print(dropdown_value)
-#     print(range_slider_value)
-#     print(check_list_value)
-#     print(radio_items_value)  # Sample data and figure
-#     df = px.data.iris()
-#     fig = px.scatter(df, x='sepal_width', y='sepal_length')
-#     return fig
-
-
-# @app.callback(
-#     Output('graph_6', 'figure'),
-#     [Input('submit_button', 'n_clicks')],
-#     [State('dropdown', 'value'), State('range_slider', 'value'), State('check_list', 'value'),
-#      State('radio_items', 'value')
-#      ])
-# def update_graph_6(n_clicks, dropdown_value, range_slider_value, check_list_value, radio_items_value):
-#     print(n_clicks)
-#     print(dropdown_value)
-#     print(range_slider_value)
-#     print(check_list_value)
-#     print(radio_items_value)  # Sample data and figure
-#     df = px.data.tips()
-#     fig = px.bar(df, x='total_bill', y='day', orientation='h')
-#     return fig
-
-
-# @app.callback(
-#     Output('card_title_1', 'children'),
-#     [Input('submit_button', 'n_clicks')],
-#     [State('dropdown', 'value'), State('range_slider', 'value'), State('check_list', 'value'),
-#      State('radio_items', 'value')
-#      ])
-# def update_card_title_1(n_clicks, dropdown_value, range_slider_value, check_list_value, radio_items_value):
-#     print(n_clicks)
-#     print(dropdown_value)
-#     print(range_slider_value)
-#     print(check_list_value)
-#     print(radio_items_value)  # Sample data and figure
-#     return 'Card Tile 1 change by call back'
-
-
-# @app.callback(
-#     Output('card_text_1', 'children'),
-#     [Input('submit_button', 'n_clicks')],
-#     [State('dropdown', 'value'), State('range_slider', 'value'), State('check_list', 'value'),
-#      State('radio_items', 'value')
-#      ])
-# def update_card_text_1(n_clicks, dropdown_value, range_slider_value, check_list_value, radio_items_value):
-#     print(n_clicks)
-#     print(dropdown_value)
-#     print(range_slider_value)
-#     print(check_list_value)
-#     print(radio_items_value)  # Sample data and figure
-#     return 'Card text change by call back'
 
 
 if __name__ == '__main__':
