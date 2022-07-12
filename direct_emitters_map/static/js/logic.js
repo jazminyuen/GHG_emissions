@@ -14,6 +14,21 @@ function getColor(x) {
         return "yellow";
     }
 }
+
+function getLevel(x) {
+    if (x === 2) {
+        return "high";
+    }
+    if (x === 1) {
+        return "mid";
+    }
+
+    if (x === 0) {
+        return "low";
+    }
+}
+
+const em_level_count = 3
 var data = d3.json("./static/direct_emitters.json");
 var locations2 = [];
 function getEmissions() {
@@ -27,6 +42,7 @@ function getEmissions() {
             var state = x.properties.State;
             var totalEmissions = x.properties["Total Emissions"];
             var emissionsClass = x.properties["Classification"];
+            var sector = x.properties["Industry Type Sector"];
             // console.log(emissionsClass);
             // console.log(x);
             locations2.push({
@@ -35,6 +51,7 @@ function getEmissions() {
                 totalEmissions: totalEmissions,
                 emissionsClass: emissionsClass,
                 state: state,
+                sector: sector,
             });
         });
         console.log(locations2);
@@ -49,6 +66,8 @@ function getEmissions() {
         var emissions2012 = [];
         var emissions2011 = [];
         var emissionstotal = [];
+
+        
         //   var emissionsAverage = [];
         locations2.forEach(x => {
             emissions2020.push(
@@ -58,8 +77,24 @@ function getEmissions() {
                     color: "black",
                     fillColor: "black",
                     radius: markerSize(x.totalEmissions["2020 Emissions"])
-                })
-            );
+                
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["2020 Emissions"]).openPopup()
+                
+
+            )
+            // emissions2020.push(
+            //     L.bindPopup(x.coordinates, {
+            //         stroke: false,
+            //         fillOpacity: 0.5,
+            //         color: "black",
+            //         fillColor: "black",
+            //         radius: markerSize(x.totalEmissions["2020 Emissions"])
+                
+            //     })
+            // );
             emissions2019.push(
                 L.circle(x.coordinates, {
                     stroke: false,
@@ -67,7 +102,10 @@ function getEmissions() {
                     color: "blue",
                     fillColor: "blue",
                     radius: markerSize(x.totalEmissions["2019 Emissions"])
-                })
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["2019 Emissions"]).openPopup()
             );
             emissions2018.push(
                 L.circle(x.coordinates, {
@@ -76,7 +114,10 @@ function getEmissions() {
                     color: "white",
                     fillColor: "white",
                     radius: markerSize(x.totalEmissions["2018 Emissions"])
-                })
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["2018 Emissions"]).openPopup()
             );
             emissions2017.push(
                 L.circle(x.coordinates, {
@@ -85,7 +126,10 @@ function getEmissions() {
                     color: "orange",
                     fillColor: "orange",
                     radius: markerSize(x.totalEmissions["2017 Emissions"])
-                })
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["2017 Emissions"]).openPopup()
             );
             emissions2016.push(
                 L.circle(x.coordinates, {
@@ -94,7 +138,10 @@ function getEmissions() {
                     color: "purple",
                     fillColor: "purple",
                     radius: markerSize(x.totalEmissions["2016 Emissions"])
-                })
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["2016 Emissions"]).openPopup()
             );
             emissions2015.push(
                 L.circle(x.coordinates, {
@@ -103,7 +150,10 @@ function getEmissions() {
                     color: "green",
                     fillColor: "green",
                     radius: markerSize(x.totalEmissions["2015 Emissions"])
-                })
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["2015 Emissions"]).openPopup()
             );
             emissions2014.push(
                 L.circle(x.coordinates, {
@@ -112,16 +162,24 @@ function getEmissions() {
                     color: "pink",
                     fillColor: "pink",
                     radius: markerSize(x.totalEmissions["2014 Emissions"])
-                })
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["2014 Emissions"]).openPopup()
             );
             emissions2013.push(
                 L.circle(x.coordinates, {
                     stroke: false,
                     fillOpacity: 0.5,
-                    color: "yellow",
-                    fillColor: "yellow",
-                    radius: markerSize(x.totalEmissions["2013 Emissions"])
-                })
+                    color: "#556B2F",
+                    fillColor: "#556B2F",
+                    radius: markerSize(x.totalEmissions["2013 Emissions"]),
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["2013 Emissions"]).openPopup()
+                
+        
             );
             emissions2012.push(
                 L.circle(x.coordinates, {
@@ -130,7 +188,10 @@ function getEmissions() {
                     color: "purple",
                     fillColor: "purple",
                     radius: markerSize(x.totalEmissions["2012 Emissions"])
-                })
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["2012 Emissions"]).openPopup()
             );
             emissions2011.push(
                 L.circle(x.coordinates, {
@@ -139,7 +200,10 @@ function getEmissions() {
                     color: "red",
                     fillColor: "red",
                     radius: markerSize(x.totalEmissions["2011 Emissions"])
-                })
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["2011 Emissions"]).openPopup()
             );
             emissionstotal.push(
                
@@ -149,10 +213,13 @@ function getEmissions() {
                     color: getColor(x.emissionsClass),
                     fillColor: getColor(x.emissionsClass),
                     radius: (x.totalEmissions["Total Emissions"]) / 1000
-                })
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["Total Emissions"]).openPopup()
 
             );
-            console.log(x.emissionsClass);
+            // console.log(x.emissionsClass);
             //   emissionsAverage.push(
             //     L.circle(x.coordinates, {
             //       stroke: false,
@@ -250,9 +317,48 @@ function getEmissions() {
         L.control.layers(baseMaps, overlayMaps, {
             collapsed: false
         }).addTo(myMap);
-    })
 
+            // Create a legend control object.
+    let legend = L.control({
+        position: "bottomright"
+    });
+
+    // Then add all the details for the legend.
+    legend.onAdd = function() {
+        let div = L.DomUtil.create("div", "info legend");
+        div.innerHTML += "<h3>Total Emissions<br> (2011-2019)</h3>"
+        // Looping through our intervals to generate a label with a colored square for each interval.
+        for (var i = 0; i < em_level_count; i++) {
+            div.innerHTML +=
+                "<i style='background: " + getColor(i) + "'></i> " + getLevel(i) + "<br>";
+        }
+        return div;
+    };
+
+    legend.addTo(myMap);
+    })
+    
+    
 }
+
+// // Create a legend control object.
+// let legend = L.control({
+//     position: "bottomright"
+//   });
+
+// // Then add all the details for the legend.
+// legend.onAdd = function() {
+//     let div = L.DomUtil.create("div", "info legend");
+//     // Looping through our intervals to generate a label with a colored square for each interval.
+//     for (var i = 0; i < em_level_count; i++) {
+//       div.innerHTML +=
+//         "<i style='background: " + getColor(i) + "'></i> " + getLevel(i) + "<br>";
+//     }
+//     return div;
+// };
+
+// legend.addTo(myMap);
+
 
 
 
