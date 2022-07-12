@@ -3,8 +3,8 @@
 from itertools import dropwhile
 import dash
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 from dash.dependencies import Input, Output, State
 import pandas as pd
 import sqlalchemy as sa
@@ -26,7 +26,7 @@ engine = create_engine(db_string)
 query = text('SELECT * FROM direct_emissions')
 df = pd.read_sql(query,engine)
 
-# creating the datasets
+# creating the datasets for total emissions by year
 total_2011 = df["total_emissions_2011"].sum()
 total_2012 = df["total_emissions_2012"].sum()
 total_2013 = df["total_emissions_2013"].sum()
@@ -74,17 +74,16 @@ emissions_df = pd.DataFrame(table)
 # summary_df = summary_df.transpose()
 # summary_df["sum"] = em_df.sum().to_list()
 
-#### New jazmin queries
+#### New jazmin queries for summary and sector emissions graphs
 query = text('SELECT * FROM sector_emissions')
 sector_df = pd.read_sql(query,engine)
-# Rename columns
 sector_df = df.rename(columns={"_2011":"2011","_2012":"2012","_2013":"2013","_2014":"2014","_2015":"2015","_2016":"2016","_2017":"2017","_2018":"2018","_2019":"2019","_2020":"2020","sector":"Sector"})
 # Get summary table
 query_summary = text('SELECT * FROM summary')
 summary_df = pd.read_sql(query_summary, engine)
 
 
-#vanessa ml figure
+# vanessa ml figure
 
 direct_emitters_df = df[['industry_type_sector', 'total_emissions_2020', 'total_emissions_2019', 'total_emissions_2018',
        'total_emissions_2017', 'total_emissions_2016', 'total_emissions_2015',
@@ -301,7 +300,7 @@ content_fourth_row = dbc.Row(
      [
         dbc.Col(
         html.Div([
-        html.H4('Total Emissions'),
+        html.H4(),
         dcc.Graph(id="emissionsgraph"),
         dcc.Checklist(id="checklist", options=["mean","median","sum"], inline=True)
 ])
@@ -316,12 +315,12 @@ content_fifth_row = dbc.Row(
      [
         dbc.Col(
         html.Div([
-        html.H4('Emissions by Top Sectors'),
+        html.H4(),
         dcc.Graph(id="sectorgraph"),
         dcc.Dropdown(id="dropdown2", options=['Power Plants', 'Waste', 'Other', 'Petroleum and Natural Gas Systems',
-       'Minerals', 'Chemicals', 'Metals', 'Pulp and Paper', 'Other,Waste','Pulp and Paper,Waste',
-       'Natural Gas and Natural Gas Liquids Suppliers,Petroleum and Natural Gas Systems',
-       'Petroleum Product Suppliers,Refineries'])
+        'Minerals', 'Chemicals', 'Metals', 'Pulp and Paper', 'Other,Waste','Pulp and Paper,Waste',
+        'Natural Gas and Natural Gas Liquids Suppliers,Petroleum and Natural Gas Systems',
+        'Petroleum Product Suppliers,Refineries'])
 ])
         ),
         # dbc.Col(
