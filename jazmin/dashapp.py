@@ -50,7 +50,7 @@ emissions_df = pd.DataFrame(table)
 
 # figure - total emissions by year bar chart
 fig1 = px.bar(emissions_df, x='Year', y='emissions', title="Total Direct Emissions by Year", labels={"emissions":"Emissions"}, color="emissions", color_continuous_scale='ylorrd')
-
+fig1.update_traces( marker_line_width=3.0, opacity=0.8)
 
 # create the datasets for ml figure
 direct_emitters_df = df[['industry_type_sector', 'total_emissions_2020', 'total_emissions_2019', 'total_emissions_2018',
@@ -117,13 +117,17 @@ mlfig = px.scatter(data_frame=direct_emitters_total, x="total_emissions", y="ind
            size="total_emissions", color_discrete_sequence=["gold", "darkorange", "red"],
                            labels={
                      "total_emissions": "Total Emissions (metric tons CO2 equivalent)",
-                     "industry_type_sector": "Industry Type (Sector)",
+                     "industry_type_sector": "Industry Type (Sector)"
                  },
                 title="Direct Emitters Classification Model", size_max=35, opacity=0.7)
 
 # figure - total emissions by sector by class 3D scatter plot
 fig3d = px.scatter_3d(direct_emitters_total, x="total_emissions", y="industry_type_sector", z="class", color="class", title="Direct Emitters Classification Model 3D",
-           color_discrete_sequence=["yellow", "orange", "red"], width=800)
+           color_discrete_sequence=["yellow", "orange", "red"],
+           labels={
+                     "total_emissions": "Total Emissions (metric tons CO2 equivalent)",
+                     "industry_type_sector": "Industry Type (Sector)"},
+                      width=800)
 fig3d.update_layout(legend=dict(x=0,y=1))
 
 
@@ -149,6 +153,8 @@ SIDE_TEXT_STYLE = {
 CONTENT_STYLE = {
     'margin-left': '25%',
     'margin-right': '5%',
+    'margin-top': '2%',
+    'margin-bottom': '5%',
     'padding': '20px 10p'
 }
 
@@ -168,7 +174,7 @@ CARD_TEXT_STYLE = {
 # sidebar layout
 sidebar = html.Div(
     [
-        html.H2('About the Data', style=SIDE_TEXT_STYLE),
+        html.H3('About the Data', style=SIDE_TEXT_STYLE),
         html.Hr(),
         dbc.Card(
             [
@@ -206,8 +212,8 @@ content_first_row = dbc.Row([
 
                 dbc.CardBody(
                     [
-                        html.H4(id='card_title_2', children=['The largest sources of emissions are from Transportation, Industry, and Electricity'],className='card-title', style=CARD_TEXT_STYLE),
-                        html.P(['Almost all of the increase of greenhouse gases in the atmosphere over the last 150 years is due to human activity'], style=CARD_TEXT_STYLE),
+                        html.H4(id='card_title_3', children=['In 2020, U.S. Carbon Dioxide emissions totaled 5,222 million metric tons of CO2e'],className='card-title', style=CARD_TEXT_STYLE),
+                        html.P(['CO2 emissions have decreased by 10.3 percent from 2019 to 2020'], style=CARD_TEXT_STYLE),
                     ]
                 ),
             ]
@@ -216,7 +222,7 @@ content_first_row = dbc.Row([
         md=3
     ),
     dbc.Col(
-            dcc.Graph(figure = fig3d), md=6
+            dcc.Graph(figure = fig1), md=6
         ),
 
 ])
@@ -226,7 +232,7 @@ content_second_row = dbc.Row(
     [
         dbc.Col(
             
-            dcc.Graph(figure=fig1), md=6,
+            dcc.Graph(figure=fig3d), md=6,
             
         ),
         dbc.Col(
@@ -235,8 +241,8 @@ content_second_row = dbc.Row(
 
                 dbc.CardBody(
                     [
-                        html.H4(id='card_title_3', children=['In 2020, U.S. CO2 emissions totaled 5,222 million metric tons of carbon dioxide equivalents'],className='card-title', style=CARD_TEXT_STYLE),
-                        html.P(['CO2 emissions have decreased by 10.3 percent from 2019 to 2020'], style=CARD_TEXT_STYLE),
+                        html.H4(id='card_title_2', children=['The largest sources of emissions are from Transportation, Industry, and Electricity'],className='card-title', style=CARD_TEXT_STYLE),
+                        html.P(['Almost all of the increase of greenhouse gases in the atmosphere over the last 150 years is due to human activity'], style=CARD_TEXT_STYLE),
                     ]
                 ),
             ]
@@ -287,7 +293,7 @@ content_fifth_row = dbc.Row(
 # content holds set layout and style variables
 content = html.Div(
     [
-        html.H2('Greenhouse Gas Emissions Dashboard', style=TEXT_STYLE),
+        html.H1('Greenhouse Gas Emissions Dashboard', style=TEXT_STYLE),
         html.Hr(),
         content_first_row,
         content_third_row,
@@ -310,8 +316,8 @@ app.layout = html.Div([sidebar, content])
 def update_summary_chart(value):
     df = summary_df
     year = ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'] 
-    fig = px.line(df, x=year, y=value, markers=True, labels=dict(value="Total Emissions (metric tons CO2 equivalent)", x="Year", variable="Metric"), title="Total Emissions Summary")
-    fig.update_traces(marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)', marker_line_width=3.0, opacity=0.6)
+    fig = px.line(df, x=year, y=value, markers=True, color_discrete_sequence=["gold", "darkorange", "red"], labels=dict(value="Total Emissions (metric tons CO2 equivalent)", x="Year", variable="Metric"), title="Total Emissions Summary")
+    fig.update_traces( marker_line_width=3.0, opacity=0.8)
     return fig
 
 # create callback to update sector emissions bar chart
@@ -324,8 +330,8 @@ def update_sector_chart(sector):
     sum = df.sum(axis=0).tolist()
     year = ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019',
        '2020'] 
-    fig = px.bar(x=year,y=sum,title=f'Emissions by Sector: {sector}',labels={'y':'Total Emissions (metric tons CO2 equivalent)', 'x':'Year'})
-    fig.update_traces(marker_color='rgb(158,202,225)',marker_line_color='rgb(8,48,107)',marker_line_width=2.5, opacity=0.6)
+    fig = px.bar(x=year,y=sum, color= sum, color_continuous_scale='ylorrd', title=f'Emissions by Sector: {sector}',labels={'y':'Total Emissions (metric tons CO2 equivalent)', 'x':'Year'})
+    fig.update_traces(marker_line_width=2.5, opacity=0.8)
     return fig
 
 
