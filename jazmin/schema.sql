@@ -235,6 +235,3 @@ industry_name varchar
 facility_type varchar
 
 
-
--- add another table for lat/lng
--- facility_id, lat, lng, basin (split add column)
