@@ -43,6 +43,9 @@ function getEmissions() {
             var totalEmissions = x.properties["Total Emissions"];
             var emissionsClass = x.properties["Classification"];
             var sector = x.properties["Industry Type Sector"];
+            // var emissionsClass_zero = x.properties["Classification"]
+
+            // console.log(emissionsClass_zero);
             // console.log(emissionsClass);
             // console.log(x);
             locations2.push({
@@ -51,9 +54,10 @@ function getEmissions() {
                 totalEmissions: totalEmissions,
                 emissionsClass: emissionsClass,
                 state: state,
-                sector: sector,
+                sector: sector
             });
         });
+        // console.log(emissionsClass);
         console.log(locations2);
         var emissions2020 = [];
         var emissions2019 = [];
@@ -66,6 +70,9 @@ function getEmissions() {
         var emissions2012 = [];
         var emissions2011 = [];
         var emissionstotal = [];
+        var emissionslow = [];
+        var emissionsmid = [];
+        var emissionshigh = [];
 
         
         //   var emissionsAverage = [];
@@ -74,27 +81,17 @@ function getEmissions() {
                 L.circle(x.coordinates, {
                     stroke: false,
                     fillOpacity: 0.5,
-                    color: "black",
-                    fillColor: "black",
+                    color: "#4682B4",
+                    fillColor: "#4682B4",
                     radius: markerSize(x.totalEmissions["2020 Emissions"])
                 
                 }).bindPopup
                 ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
                 x.sector + "<br>" +
-                "Total Emissions: " + x.totalEmissions["2020 Emissions"]).openPopup()
+                "Total Emissions: " + x.totalEmissions["2020 Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
                 
 
-            )
-            // emissions2020.push(
-            //     L.bindPopup(x.coordinates, {
-            //         stroke: false,
-            //         fillOpacity: 0.5,
-            //         color: "black",
-            //         fillColor: "black",
-            //         radius: markerSize(x.totalEmissions["2020 Emissions"])
-                
-            //     })
-            // );
+            );
             emissions2019.push(
                 L.circle(x.coordinates, {
                     stroke: false,
@@ -105,31 +102,31 @@ function getEmissions() {
                 }).bindPopup
                 ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
                 x.sector + "<br>" +
-                "Total Emissions: " + x.totalEmissions["2019 Emissions"]).openPopup()
+                "Total Emissions: " + x.totalEmissions["2019 Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
             );
             emissions2018.push(
                 L.circle(x.coordinates, {
                     stroke: false,
                     fillOpacity: 0.5,
-                    color: "white",
-                    fillColor: "white",
+                    color: "#008080",
+                    fillColor: "#008080",
                     radius: markerSize(x.totalEmissions["2018 Emissions"])
                 }).bindPopup
                 ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
                 x.sector + "<br>" +
-                "Total Emissions: " + x.totalEmissions["2018 Emissions"]).openPopup()
+                "Total Emissions: " + x.totalEmissions["2018 Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
             );
             emissions2017.push(
                 L.circle(x.coordinates, {
                     stroke: false,
-                    fillOpacity: 0.5,
-                    color: "orange",
-                    fillColor: "orange",
+                    fillOpacity: 0.6,
+                    color: "#FF8C00",
+                    fillColor: "#FF8C00",
                     radius: markerSize(x.totalEmissions["2017 Emissions"])
                 }).bindPopup
                 ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
                 x.sector + "<br>" +
-                "Total Emissions: " + x.totalEmissions["2017 Emissions"]).openPopup()
+                "Total Emissions: " + x.totalEmissions["2017 Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
             );
             emissions2016.push(
                 L.circle(x.coordinates, {
@@ -141,31 +138,31 @@ function getEmissions() {
                 }).bindPopup
                 ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
                 x.sector + "<br>" +
-                "Total Emissions: " + x.totalEmissions["2016 Emissions"]).openPopup()
+                "Total Emissions: " + x.totalEmissions["2016 Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
             );
             emissions2015.push(
                 L.circle(x.coordinates, {
                     stroke: false,
                     fillOpacity: 0.5,
-                    color: "green",
-                    fillColor: "green",
+                    color: "#CD5C5C",
+                    fillColor: "#CD5C5C",
                     radius: markerSize(x.totalEmissions["2015 Emissions"])
                 }).bindPopup
                 ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
                 x.sector + "<br>" +
-                "Total Emissions: " + x.totalEmissions["2015 Emissions"]).openPopup()
+                "Total Emissions: " + x.totalEmissions["2015 Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
             );
             emissions2014.push(
                 L.circle(x.coordinates, {
                     stroke: false,
                     fillOpacity: 0.5,
-                    color: "pink",
-                    fillColor: "pink",
+                    color: "#663399",
+                    fillColor: "#663399",
                     radius: markerSize(x.totalEmissions["2014 Emissions"])
                 }).bindPopup
                 ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
                 x.sector + "<br>" +
-                "Total Emissions: " + x.totalEmissions["2014 Emissions"]).openPopup()
+                "Total Emissions: " + x.totalEmissions["2014 Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
             );
             emissions2013.push(
                 L.circle(x.coordinates, {
@@ -177,7 +174,7 @@ function getEmissions() {
                 }).bindPopup
                 ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
                 x.sector + "<br>" +
-                "Total Emissions: " + x.totalEmissions["2013 Emissions"]).openPopup()
+                "Total Emissions: " + x.totalEmissions["2013 Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
                 
         
             );
@@ -185,25 +182,25 @@ function getEmissions() {
                 L.circle(x.coordinates, {
                     stroke: false,
                     fillOpacity: 0.5,
-                    color: "purple",
-                    fillColor: "purple",
+                    color: "#FF1493",
+                    fillColor: "#FF1493",
                     radius: markerSize(x.totalEmissions["2012 Emissions"])
                 }).bindPopup
                 ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
                 x.sector + "<br>" +
-                "Total Emissions: " + x.totalEmissions["2012 Emissions"]).openPopup()
+                "Total Emissions: " + x.totalEmissions["2012 Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
             );
             emissions2011.push(
                 L.circle(x.coordinates, {
                     stroke: false,
                     fillOpacity: 0.5,
-                    color: "red",
-                    fillColor: "red",
+                    color: "#228B22",
+                    fillColor: "#228B22",
                     radius: markerSize(x.totalEmissions["2011 Emissions"])
                 }).bindPopup
                 ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
                 x.sector + "<br>" +
-                "Total Emissions: " + x.totalEmissions["2011 Emissions"]).openPopup()
+                "Total Emissions: " + x.totalEmissions["2011 Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
             );
             emissionstotal.push(
                
@@ -216,24 +213,68 @@ function getEmissions() {
                 }).bindPopup
                 ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
                 x.sector + "<br>" +
-                "Total Emissions: " + x.totalEmissions["Total Emissions"]).openPopup()
+                "Total Emissions: " + x.totalEmissions["Total Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
 
             );
-            // console.log(x.emissionsClass);
-            //   emissionsAverage.push(
-            //     L.circle(x.coordinates, {
-            //       stroke: false,
-            //       fillOpacity: 0.5,
-            //       color: "red",
-            //       fillColor: getColor(x.totalEmissions["Average Emissions"]),
-            //       radius: x.totalEmissions["Average Emissions"]/8
-            //     })
+                // console.log(x.emissionsClass);
+            if (x.emissionsClass === 0) {
 
-            //   );
+                emissionslow.push(
 
+                L.circle(x.coordinates, {
+                    stroke: false,
+                    fillOpacity: 0.5,
+                    color: getColor(x.emissionsClass),
+                    fillColor: getColor(x.emissionsClass),
+                    radius: (x.totalEmissions["Total Emissions"]) / 1000
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["Total Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
 
+            )
+            };
 
-        })
+            if (x.emissionsClass === 1) {
+
+                emissionsmid.push(
+
+                L.circle(x.coordinates, {
+                    stroke: false,
+                    fillOpacity: 0.5,
+                    color: getColor(x.emissionsClass),
+                    fillColor: getColor(x.emissionsClass),
+                    radius: (x.totalEmissions["Total Emissions"]) / 1000
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["Total Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
+
+            )
+            };
+
+            if (x.emissionsClass === 2) {
+
+                emissionshigh.push(
+
+                L.circle(x.coordinates, {
+                    stroke: false,
+                    fillOpacity: 0.5,
+                    color: getColor(x.emissionsClass),
+                    fillColor: getColor(x.emissionsClass),
+                    radius: (x.totalEmissions["Total Emissions"]) / 1000
+                }).bindPopup
+                ("Location: " + x.city + ", " + x.state + "<br>" + "Industry Type Subpart (Sector): " +
+                x.sector + "<br>" +
+                "Total Emissions: " + x.totalEmissions["Total Emissions"].toLocaleString("en-US") + (" MT CO2 Equivalent")).openPopup()
+
+            )
+            };
+            
+ 
+
+        }) 
+    
         console.log(locations2);
         // Streetmap Layer
         var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -288,6 +329,9 @@ function getEmissions() {
         var em_2012 = L.layerGroup(emissions2012);
         var em_2011 = L.layerGroup(emissions2011);
         var em_total = L.layerGroup(emissionstotal);
+        var em_low = L.layerGroup(emissionslow);
+        var em_mid = L.layerGroup(emissionsmid);
+        var em_high = L.layerGroup(emissionshigh);
         //   var em_avg = L.layerGroup(emissionsAverage);
         var overlayMaps = {
             "2020 Emissions": em_2020,
@@ -300,7 +344,10 @@ function getEmissions() {
             "2013 Emissions": em_2013,
             "2012 Emissions": em_2012,
             "2011 Emissions": em_2011,
-            "Total Emissions (2011-2019)": em_total
+            "Total Emissions (2011-2020)": em_total,
+            "Total Emissions (2011-2020) Low Emitters": em_low,
+            "Total Emissions (2011-2020) Medium Emitters": em_mid,
+            "Total Emissions (2011-2020) High Emitters": em_high
             // "Average Emissions (2011-2019)": em_avg
         }
 
@@ -341,26 +388,6 @@ function getEmissions() {
     
 }
 
-// // Create a legend control object.
-// let legend = L.control({
-//     position: "bottomright"
-//   });
-
-// // Then add all the details for the legend.
-// legend.onAdd = function() {
-//     let div = L.DomUtil.create("div", "info legend");
-//     // Looping through our intervals to generate a label with a colored square for each interval.
-//     for (var i = 0; i < em_level_count; i++) {
-//       div.innerHTML +=
-//         "<i style='background: " + getColor(i) + "'></i> " + getLevel(i) + "<br>";
-//     }
-//     return div;
-// };
-
-// legend.addTo(myMap);
-
-
-
 
 locations2 = getEmissions();
-console.log(locations2);
+// console.log(locations2);
