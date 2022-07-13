@@ -212,7 +212,7 @@ content_first_row = dbc.Row([
 
                 dbc.CardBody(
                     [
-                        html.H4(id='card_title_3', children=['In 2020, U.S. CO2 emissions totaled 5,222 million metric tons of carbon dioxide equivalents'],className='card-title', style=CARD_TEXT_STYLE),
+                        html.H4(id='card_title_3', children=['In 2020, U.S. Carbon Dioxide emissions totaled 5,222 million metric tons of CO2e'],className='card-title', style=CARD_TEXT_STYLE),
                         html.P(['CO2 emissions have decreased by 10.3 percent from 2019 to 2020'], style=CARD_TEXT_STYLE),
                     ]
                 ),
