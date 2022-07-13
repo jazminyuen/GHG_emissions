@@ -373,7 +373,7 @@ function getEmissions() {
     // Then add all the details for the legend.
     legend.onAdd = function() {
         let div = L.DomUtil.create("div", "info legend");
-        div.innerHTML += "<h3>Total Emissions<br> (2011-2019)</h3>"
+        div.innerHTML += "<h3>Total Emissions<br> (2011-2020)</h3>"
         // Looping through our intervals to generate a label with a colored square for each interval.
         for (var i = 0; i < em_level_count; i++) {
             div.innerHTML +=
