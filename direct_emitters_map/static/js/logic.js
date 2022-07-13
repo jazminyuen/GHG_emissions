@@ -17,14 +17,14 @@ function getColor(x) {
 
 function getLevel(x) {
     if (x === 2) {
-        return "high";
+        return "Classified High Emitters";
     }
     if (x === 1) {
-        return "mid";
+        return "Classified Medium Emitters";
     }
 
     if (x === 0) {
-        return "low";
+        return "Classified Low Emitters";
     }
 }
 
@@ -357,7 +357,7 @@ function getEmissions() {
                 37.09, -95.71
             ],
             zoom: 5,
-            layers: [streetmap]
+            layers: [night, em_low, em_mid, em_high]
         });
 
         // Create a layer control, containing our baseMaps and overlayMaps, and add them to the map
