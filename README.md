@@ -1,8 +1,5 @@
 # Greenhouse Gas Emissions of U.S. Companies
 
-## Link to our Dashboard
-
-
 ## Reasoning
 
 Our team's chief reason for choosing this topic is our shared concern for humanity and climate change.
@@ -27,6 +24,4 @@ Our team aims to answer the following question:
 - Shared Google Doc to track ideas
 - Slack for messaging
 
-## Presentation Notes in Google Slides
-This link will bring you to our slide show that holds our speaker notes. 
-https://docs.google.com/presentation/d/1d_GdN0rWRnPdJn9xq8NHONRx1OgGFIx-fp7_ixD87c4/edit?usp=sharing
+
