@@ -32,4 +32,8 @@ Due to time restraints on the project, we were not able to deploy this map to an
 <br>
 https://www.youtube.com/watch?v=rtH40gmZXtQ </br>
 
+## Dashboard Video
+Our dashboard holds several visualizations from initial analysis to our machine learning model. Our next step is to deploy this to a web app so it can be publicly accessed. Below is the link to the Dashboard video.
 
+<br>
+https://www.youtube.com/watch?v=eYm3AwUJJYs&feature=youtu.be
